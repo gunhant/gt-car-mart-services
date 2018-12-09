@@ -1,9 +1,6 @@
 package com.tatman.gtcarmartservices.entities;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Entity
 public class Car {
@@ -16,15 +13,20 @@ public class Car {
     private int year;
     private long price;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "owner")
+    private Owner owner;
+
     public Car() {}
 
-    public Car(String brand, String model, String color, String registerNumber, int year, long price) {
+    public Car(String brand, String model, String color, String registerNumber, int year, long price, Owner owner) {
         this.brand = brand;
         this.model = model;
         this.color = color;
         this.registerNumber = registerNumber;
         this.year = year;
         this.price = price;
+        this.owner = owner;
     }
 
     public String getBrand() {
@@ -73,5 +75,13 @@ public class Car {
 
     public void setPrice(long price) {
         this.price = price;
+    }
+
+    public Owner getOwner() {
+        return owner;
+    }
+
+    public void setOwner(Owner owner) {
+        this.owner = owner;
     }
 }
